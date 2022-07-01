@@ -1,31 +1,35 @@
-import React, { useState } from 'react'
-import Editor from 'react-monaco-editor'
+import React, { Dispatch, SetStateAction } from 'react'
+import Editor, { OnChange } from '@monaco-editor/react'
+import { Theme } from '../lib/defineTheme'
+import { editor } from 'monaco-editor'
+import { getLanguageValueById } from '../constants/LanguageList'
 
 type Props = {
-  onChange: (type: string, code: string) => void
-  language: string
-  code: string | null
-  theme: string
+  onChange: OnChange
+  languageId: number
+  code: string
+  theme: Theme
+  onCodeValidation: Dispatch<SetStateAction<boolean>>
 }
 
-function EditorWindow({ onChange, language, code, theme }: Props) {
-  const [currentCode, setCurrentCode] = useState<string>(code || '')
-  const handleCodeChange = (incomingCode: string) => {
-    setCurrentCode(incomingCode)
-    onChange('code', incomingCode)
+const EditorWindow = ({ onChange, languageId, code, theme, onCodeValidation }: Props) => {
+  const handleEditorValidation = (markers: editor.IMarker[]) => {
+    markers.forEach((marker) => console.error('code validation error:', marker.message))
+    const isCodeValid = markers.length === 0
+    onCodeValidation(isCodeValid)
   }
+
   return (
-    <div>
-      <Editor
-        height="85vh"
-        width="100%"
-        language={language || 'javascript'}
-        value={currentCode}
-        theme={theme}
-        defaultValue="// Go ahead and code! Don't panic it doesn't break easily <3"
-        onChange={handleCodeChange}
-      />
-    </div>
+    <Editor
+      height="75vh"
+      width="100%"
+      language={getLanguageValueById(languageId)}
+      value={code}
+      theme={theme}
+      onChange={onChange}
+      onValidate={handleEditorValidation}
+      defaultValue="// happy coding <3"
+    />
   )
 }
 
