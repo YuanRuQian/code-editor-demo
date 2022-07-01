@@ -8,7 +8,7 @@ import axios from 'axios'
 import { getAxiosOptions } from '../lib/axiosOptions'
 import { ProcessingStatusIds, SuccessStatusIds } from '../constants/StatusList'
 import { StatusToast } from './StatusToast'
-import { AlertColor, Box, Button, Grid } from '@mui/material'
+import { AlertColor, Backdrop, Box, Button, CircularProgress, Grid } from '@mui/material'
 import { LanguageList } from '../constants/LanguageList'
 import { CustomInput } from './CustomInput'
 import { OutputWindow } from './OutputWindow'
@@ -110,6 +110,12 @@ const LandingPage = () => {
 
   return (
     <Box>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (wholeTheme) => wholeTheme.zIndex.drawer + 1 }}
+        open={processing}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <StatusToast status={status} handleStatusChangeOnClose={() => setStatus(undefined)} />
       <ActionsBar
         languageId={languageId}

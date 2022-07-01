@@ -3,6 +3,7 @@ import Editor, { OnChange } from '@monaco-editor/react'
 import { Theme } from '../lib/defineTheme'
 import { editor } from 'monaco-editor'
 import { getLanguageValueById } from '../constants/LanguageList'
+import { CircularProgress } from '@mui/material'
 
 type Props = {
   onChange: OnChange
@@ -29,6 +30,7 @@ const EditorWindow = ({ onChange, languageId, code, theme, onCodeValidation }: P
       onChange={onChange}
       onValidate={handleEditorValidation}
       defaultValue="// happy coding <3"
+      loading={<CircularProgress />}
     />
   )
 }
