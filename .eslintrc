@@ -46,6 +46,7 @@
         "ignoreComments": true
       }
     ],
+    "spaced-comment": ["error", "always", { "markers": ["/"] }],
     "no-plusplus": [
       "error",
       {
