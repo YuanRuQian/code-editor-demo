@@ -1,8 +1,17 @@
 import React from 'react'
-import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from '@mui/material'
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
+  IconButton,
+  Grid,
+} from '@mui/material'
 import { OptionType } from '../constants/OptionType'
 import { LanguageList } from '../constants/LanguageList'
 import { defineTheme, getThemeList, Theme } from '../lib/defineTheme'
+import GitHubIcon from '@mui/icons-material/GitHub'
 
 type BarSelectProps = {
   inputLabel: string
@@ -41,6 +50,21 @@ const ThemeSelect = (selectProps: SelectProps) => {
   return <BarSelect {...selectProps} menuItems={themeList} />
 }
 
+const GitHubRepoLinkButton = () => {
+  const navigateToProjectGitHubRepo = () =>
+    window.open('https://github.com/YuanRuQian/code-editor-demo', '_blank', 'noreferrer')
+
+  return (
+    <IconButton
+      color="inherit"
+      aria-label="link to the project's GitHub repo"
+      onClick={navigateToProjectGitHubRepo}
+    >
+      <GitHubIcon fontSize="large" />
+    </IconButton>
+  )
+}
+
 type Props = {
   languageId: number
   setLanguageId: (language: number) => void
@@ -60,14 +84,19 @@ const ActionsBar = ({ languageId, setLanguageId, theme, setTheme }: Props) => {
   }
 
   return (
-    <div>
-      <LanguageSelect
-        inputLabel="language"
-        selectValue={String(languageId)}
-        onChange={handleLanguageChange}
-      />
-      <ThemeSelect inputLabel="theme" selectValue={theme} onChange={handleThemeChange} />
-    </div>
+    <Grid container direction="row" justifyContent="center" alignItems="center" spacing={2}>
+      <Grid item md={10}>
+        <LanguageSelect
+          inputLabel="language"
+          selectValue={String(languageId)}
+          onChange={handleLanguageChange}
+        />
+        <ThemeSelect inputLabel="theme" selectValue={theme} onChange={handleThemeChange} />
+      </Grid>
+      <Grid item md={2}>
+        <GitHubRepoLinkButton />
+      </Grid>
+    </Grid>
   )
 }
 
