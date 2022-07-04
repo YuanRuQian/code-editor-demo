@@ -102,7 +102,12 @@ const LandingPage = () => {
 
     const isButtonDisabled = !isCodeValid || processing || !code
     return (
-      <Button onClick={handleCompile} disabled={isButtonDisabled} variant="contained">
+      <Button
+        onClick={handleCompile}
+        disabled={isButtonDisabled}
+        variant="contained"
+        style={{ marginBottom: '10%' }}
+      >
         {getButtonText()}
       </Button>
     )
